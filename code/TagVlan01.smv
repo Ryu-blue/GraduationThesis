@@ -1,0 +1,380 @@
+MODULE main
+
+VAR
+    node : {Switch1,Switch2,Switch3,
+    Switch11,Switch12,Switch13,
+    Switch21,Switch22,Switch23,
+    Switch31,Switch32,Switch33,
+    Switch41,Switch42,Switch43,
+    Term11,Term12,Term13,Term14,
+    Term21,Term22,Term23,Term24,
+    Term31,Term32,Term33,Term34,
+    Term41,Term42,Term43,Term44};
+    port : 1..4;
+    tag1 : {null,100,200};
+    tag2 : {null,x,y};
+    phase : {incoming,outgoing,discarded};
+
+ASSIGN
+    init(node) := Term22;
+    init(port) := 1;
+    init(tag1) := null;
+    init(tag2) := null;
+    init(phase) := outgoing;
+
+TRANS
+    case
+        phase = outgoing:--遷移
+            case
+                node = Switch1 & port = 1 : next(node) = Switch2 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch1 & port = 2 : next(node) = Switch3 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch1 & port = 3 : next(node) = Switch11 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = null & next(phase) = incoming;
+                node = Switch1 & port = 4 : next(node) = Switch21 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = null & next(phase) = incoming;
+
+                node = Switch2 & port = 1 : next(node) = Switch1 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch2 & port = 2 : next(node) = Switch3 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch2 & port = 3 : next(node) = Switch31 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = null & next(phase) = incoming;
+                node = Switch2 & port = 4 : next(node) = Switch41 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = null & next(phase) = incoming;
+
+                node = Switch3 & port = 1 : next(node) = Switch1 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch3 & port = 2 : next(node) = Switch2 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Switch11 & port = 1 : next(node) = Switch1 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch11 & port = 2 : next(node) = Switch12 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch11 & port = 3 : next(node) = Switch13 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch12 & port = 1 : next(node) = Switch11 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch12 & port = 2 : next(node) = Term11 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch12 & port = 3 : next(node) = Term12 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Switch13 & port = 1 : next(node) = Switch11 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch13 & port = 2 : next(node) = Term13 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch13 & port = 3 : next(node) = Term14 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch21 & port = 1 : next(node) = Switch1 & next(port) = 4 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch21 & port = 2 : next(node) = Switch22 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch21 & port = 3 : next(node) = Switch23 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Switch22 & port = 1 : next(node) = Switch21 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch22 & port = 2 : next(node) = Term21 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch22 & port = 3 : next(node) = Term22 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch23 & port = 1 : next(node) = Switch21 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch23 & port = 2 : next(node) = Term23 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch23 & port = 3 : next(node) = Term24 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch31 & port = 1 : next(node) = Switch2 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch31 & port = 2 : next(node) = Switch32 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch31 & port = 3 : next(node) = Switch33 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Switch32 & port = 1 : next(node) = Switch31 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch32 & port = 2 : next(node) = Term31 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch32 & port = 3 : next(node) = Term32 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch33 & port = 1 : next(node) = Switch31 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch33 & port = 2 : next(node) = Term33 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch33 & port = 3 : next(node) = Term34 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch41 & port = 1 : next(node) = Switch2 & next(port) = 4 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch41 & port = 2 : next(node) = Switch42 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch41 & port = 3 : next(node) = Switch43 & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Switch42 & port = 1 : next(node) = Switch41 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch42 & port = 2 : next(node) = Term41 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch42 & port = 3 : next(node) = Term42 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Switch43 & port = 1 : next(node) = Switch41 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch43 & port = 2 : next(node) = Term43 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                node = Switch43 & port = 3 : next(node) = Term44 & next(port) = 1 & next(tag1) = null & next(tag2) = tag2 & next(phase) = incoming;
+                
+                node = Term11 & port = 1 : next(node) = Switch12 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term12 & port = 1 : next(node) = Switch12 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term13 & port = 1 : next(node) = Switch13 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term14 & port = 1 : next(node) = Switch13 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Term21 & port = 1 : next(node) = Switch22 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term22 & port = 1 : next(node) = Switch22 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term23 & port = 1 : next(node) = Switch23 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term24 & port = 1 : next(node) = Switch23 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Term31 & port = 1 : next(node) = Switch32 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term32 & port = 1 : next(node) = Switch32 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term33 & port = 1 : next(node) = Switch33 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term34 & port = 1 : next(node) = Switch33 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                node = Term41 & port = 1 : next(node) = Switch42 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term42 & port = 1 : next(node) = Switch42 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term43 & port = 1 : next(node) = Switch43 & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+                node = Term44 & port = 1 : next(node) = Switch43 & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = incoming;
+
+                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                esac;
+            
+        phase = incoming:--ノードのVLAN設定に従って遷移
+            case
+                node = Switch1:
+                    case
+                        port = 1:
+                            case
+                                tag2 = x:
+                                    next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag2 = y:
+                                    next(node) = node & (next(port) = 2 | next(port) = 4) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            case
+                                tag2 = x:
+                                    next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag2 = y:
+                                    next(node) = node & (next(port) = 1 | next(port) = 4) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = x & next(phase) = outgoing;
+                        port = 4:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = y & next(phase) = outgoing;
+                            TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                            esac;
+
+                node = Switch2:
+                    case
+                        port = 1:
+                            case
+                                tag2 = x:
+                                    next(node) = node & (next(port) = 2 | next(port) = 4) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag2 = y:
+                                    next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            case
+                                tag2 = x:
+                                    next(node) = node & (next(port) = 1 | next(port) = 4) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag2 = y:
+                                    next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = y & next(phase) = outgoing;
+                        port = 4:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = x & next(phase) = outgoing;
+                            TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                            esac;
+
+                node = Switch3:
+                    case
+                        port = 1:
+                            next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                            TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                            esac;
+
+                node = Switch11:
+                    case
+                        port = 1:
+                            next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 2:
+                            next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+                node = Switch21:
+                    case
+                        port = 1:
+                            next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 2:
+                            next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+                node = Switch31:
+                    case
+                        port = 1:
+                            next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 2:
+                            next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+                node = Switch41:
+                    case
+                        port = 1:
+                            next(node) = node & (next(port) = 2 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 2:
+                            next(node) = node & (next(port) = 1 | next(port) = 3) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & (next(port) = 1 | next(port) = 2) & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch12:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch13:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch22:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch23:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch32:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch33:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch42:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Switch43:
+                    case
+                        port = 1:
+                            case 
+                                tag1 = 100:
+                                    next(node) = node & next(port) = 2 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                tag1 = 200:
+                                    next(node) = node & next(port) = 3 & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = outgoing;
+                                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                                esac;
+                        port = 2:
+                            next(node) = node & next(port) = 1 & next(tag1) = 100 & next(tag2) = tag2 & next(phase) = outgoing;
+                        port = 3:
+                            next(node) = node & next(port) = 1 & next(tag1) = 200 & next(tag2) = tag2 & next(phase) = outgoing;
+                        TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                        esac;
+
+                node = Term11 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term12 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term13 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term14 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+
+                node = Term21 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term22 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term23 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term24 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+
+                node = Term31 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term32 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term33 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term34 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+
+                node = Term41 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term42 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term43 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                node = Term44 : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+
+                TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = discarded;
+                esac;
+
+        phase = discarded:
+            next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = phase;
+            TRUE : next(node) = node & next(port) = port & next(tag1) = tag1 & next(tag2) = tag2 & next(phase) = phase;
+            esac;
+
+CTLSPEC
+    !EF(node = Term24)
