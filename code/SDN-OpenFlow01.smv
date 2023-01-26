@@ -1,0 +1,131 @@
+MODULE main
+
+VAR
+    node : {PC1,PC2,OFS1,OFS2,OFS3,OFS4,OFC};
+    endnode : {PC1,PC2};
+    port : 0..4;
+    phase : {incoming,outgoing,discarded,arrival};
+    actionphase : {Message,Control};
+
+    ftOFS1 : {1,2,3,null};
+    ftOFS2 : {1,2,null};
+    ftOFS3 : {1,2,null};
+    ftOFS4 : {1,2,3,null};
+    ftOFC : {1,2,3,4,null};
+
+ASSIGN
+    init(node) := PC1;
+    init(port) := 1;
+    init(endnode) := PC2;
+    init(actionphase) := Message;
+    init(phase) := outgoing;
+    
+    init(ftOFS1) := 2;
+    init(ftOFS2) := 2;
+    init(ftOFS3) := null;
+    init(ftOFS4) := 1;
+    init(ftOFC) := null;
+
+TRANS
+    case
+        actionphase = Message:
+            case
+                phase = outgoing:--遷移のみ。incomingでftと比べる
+                    case
+                        node = PC1 & port = 1 : next(node) = OFS1 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        node = PC2 & port = 1 : next(node) = OFS4 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        node = OFS1 & port = 1 : next(node) = PC1 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS1 & port = 2 : next(node) = OFS2 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS1 & port = 3 : next(node) = OFS3 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        node = OFS2 & port = 1 : next(node) = OFS1 & next(port) = 2 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS2 & port = 2 : next(node) = OFS4 & next(port) = 2 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        node = OFS3 & port = 1 : next(node) = OFS1 & next(port) = 3 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS3 & port = 2 : next(node) = OFS4 & next(port) = 3 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        node = OFS4 & port = 1 : next(node) = PC2 & next(port) = 1 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS4 & port = 2 : next(node) = OFS2 & next(port) = 2 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        node = OFS4 & port = 3 : next(node) = OFS3 & next(port) = 2 & next(phase) = incoming & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                        TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                        esac;
+                        
+                phase = incoming:
+                    case
+                        node = PC1:
+                            case
+                                endnode = PC1 : next(phase) = arrival & next(node) = node & next(port) = port & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                endnode != PC1 : next(phase) = outgoing & next(node) = node & next(port) = port & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+                        
+                        node = PC2:
+                            case
+                                endnode = PC2 : next(phase) = arrival & next(node) = node & next(port) = port & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                endnode != PC2 : next(phase) = outgoing & next(node) = node & next(port) = port & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+                        
+                        node = OFS1:
+                            case
+                                ftOFS1 = 1 : next(port) = 1 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS1 = 2 : next(port) = 2 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS1 = 3 : next(port) = 3 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+
+                        node = OFS2:
+                            case
+                                ftOFS2 = 1 : next(port) = 1 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS2 = 2 : next(port) = 2 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+
+                        node = OFS3:
+                            case
+                                ftOFS3 = 1 : next(port) = 1 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS3 = 2 : next(port) = 2 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+                                
+                        node = OFS4:
+                            case
+                                ftOFS4 = 1 : next(port) = 1 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS4 = 2 : next(port) = 2 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                ftOFS4 = 3 : next(port) = 3 & next(phase) = outgoing & next(node) = node & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+
+                                TRUE : next(node) = node & next(port) = port & next(phase) = discarded & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                                esac;
+
+                phase = discarded:
+                    next(node) = node & next(port) = port & next(phase) = phase & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                    TRUE : next(node) = node & next(port) = port & next(phase) = phase & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                    esac;
+
+                phase = arrival:--送信元ごとに書き換えないとならない
+                    next(node) = PC1 & next(port) = 1 & next(phase) = outgoing & next(actionphase) = Control & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & (next(ftOFC) = 1 | next(ftOFC) = 2 | next(ftOFC) = 3 | next(ftOFC) = 4);
+                    TRUE : next(node) = node & next(port) = port & next(phase) = phase & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                    esac;
+
+        actionphase = Control: 
+            case 
+                ftOFC = 1 : ( next(ftOFS1) = 1 | next(ftOFS1) = 2 | next(ftOFS1) = 3 | next(ftOFS1) = null ) & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(actionphase) = Message & next(node) = node & next(port) = port & next(phase) = phase & next(endnode) = endnode & next(ftOFC) = null;
+                ftOFC = 2 : ( next(ftOFS2) = 1 | next(ftOFS2) = 2 | next(ftOFS2) = null ) & next(ftOFS1) = ftOFS1 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(actionphase) = Message & next(node) = node & next(port) = port & next(phase) = phase & next(endnode) = endnode & next(ftOFC) = null;
+                ftOFC = 3 : ( next(ftOFS3) = 1 | next(ftOFS3) = 2 | next(ftOFS3) = null ) & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS4) = ftOFS4 & next(actionphase) = Message & next(node) = node & next(port) = port & next(phase) = phase & next(endnode) = endnode & next(ftOFC) = null;
+                ftOFC = 4 : ( next(ftOFS4) = 1 | next(ftOFS4) = 2 | next(ftOFS4) = 3 | next(ftOFS4) = null ) & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(actionphase) = Message & next(node) = node & next(port) = port & next(phase) = phase & next(endnode) = endnode & next(ftOFC) = null;
+                TRUE : next(node) = node & next(port) = port & next(phase) = phase & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+                esac;
+
+TRUE : next(node) = node & next(port) = port & next(phase) = phase & next(actionphase) = actionphase & next(endnode) = endnode & next(ftOFS1) = ftOFS1 & next(ftOFS2) = ftOFS2 & next(ftOFS3) = ftOFS3 & next(ftOFS4) = ftOFS4 & next(ftOFC) = ftOFC;
+esac;
+
+CTLSPEC
+    !E[!(phase = discarded) U (ftOFS1 = 3 & phase = arrival)]
